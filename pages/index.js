@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const TROYBOT_VIDEO_URL =
-  "https://www.mebot.ai/video-chat/e90104a1-81f6-4023-a86e-07dc1232b5cb?slug=troybot&summarize=false&isAudioChat=false";
+  "https://www.mebot.ai/bot/troybot";
 
 export default function Home() {
   const [phone, setPhone] = useState("");
