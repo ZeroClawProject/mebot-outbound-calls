@@ -11,21 +11,16 @@ export default function Home() {
     setJoinUrl("");
 
     try {
-      const response = await fetch("/api/create-call", {
-        method: "POST"
-      });
-
+      const response = await fetch("/api/create-call");
       const data = await response.json();
 
-      if (!response.ok) {
+      if (!response.ok || !data.joinUrl) {
         throw new Error(data.error || "Could not create call");
       }
 
       setJoinUrl(data.joinUrl);
-
     } catch (err) {
       setError(err.message);
-
     } finally {
       setLoading(false);
     }
@@ -40,15 +35,12 @@ export default function Home() {
     <main style={{
       padding: 40,
       fontFamily: "Arial, sans-serif",
-      maxWidth: 700,
+      maxWidth: 720,
       margin: "0 auto"
     }}>
-      
       <h1>Mebot Outbound Calls</h1>
 
-      <p>
-        Create a private video call and send the invite.
-      </p>
+      <p>Create a private video call and send the invite.</p>
 
       <button
         onClick={startCall}
@@ -56,19 +48,18 @@ export default function Home() {
         style={{
           padding: "12px 20px",
           borderRadius: 8,
-          cursor: "pointer"
+          cursor: "pointer",
+          fontSize: 16
         }}
       >
-        {loading ? "Creating..." : "Start Call"}
+        {loading ? "Creating Call..." : "Start Call"}
       </button>
 
       {joinUrl && (
         <div style={{ marginTop: 30 }}>
-          <h3>Invite Link</h3>
+          <h2>Invite Link</h2>
 
-          <p style={{
-            wordBreak: "break-all"
-          }}>
+          <p style={{ wordBreak: "break-all" }}>
             {joinUrl}
           </p>
 
@@ -82,18 +73,18 @@ export default function Home() {
           >
             Copy Link
           </button>
+
+          <p style={{ marginTop: 20 }}>
+            Send this link by text, email, iMessage, WhatsApp, or Slack.
+          </p>
         </div>
       )}
 
       {error && (
-        <p style={{
-          color: "red",
-          marginTop: 20
-        }}>
+        <p style={{ color: "red", marginTop: 20 }}>
           {error}
         </p>
       )}
-
     </main>
   );
 }
